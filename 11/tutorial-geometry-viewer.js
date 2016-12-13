@@ -125,11 +125,14 @@ function init() {
     var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/plato/plato-1.obj", function (object) {
                    object.traverse(function (child) {
-                                   if (child instanceof Physijs.Mesh) {
+                                   if (child instanceof THREE.Mesh) {
                                    child.material.map = texture;
                                    }
                                    });
-                   object.position.x = 1.0;
+                   object.position.y = 1.0;
+                   
+                   object.position.x = -10.0;
+                   object.scale.x = object.scale.y = object.scale.z = 1.3;
                    scene.add(object);
                    });
     
@@ -167,6 +170,10 @@ function init() {
                                    child.material.map = texture;
                                    }
                                    });
+                   
+                   object.position.y = 2.0;
+                    object.position.x = 10.0;
+                   object.scale.x = object.scale.y = object.scale.z = 1;
                    scene.add(object);
                    });
     
