@@ -1,7 +1,7 @@
 "use strict";
 
 
-Physijs.scripts.worker = '/js/physijs_worker.js';
+Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = '/js/ammo.js';
 
 
@@ -17,9 +17,11 @@ animate();
 function init() {
 
       // Create the scene and set the scene size.
-      scene = new Physijs.Scene({ fixedTimeStep: 1/120 });
+        
+    scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
+    scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
     
-    scene.setGravity( new THREE.Vector3 (0, -30, 0 ));
+    
     
       var WIDTH = window.innerWidth,
           HEIGHT = window.innerHeight;
@@ -125,8 +127,10 @@ function init() {
     var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/plato/plato-1.obj", function (object) {
                    object.traverse(function (child) {
-                                   if (child instanceof THREE.Mesh) {
+                                   if (child instanceof Physijs.BoxMesh) {
                                    child.material.map = texture;
+                                   Console.Log("help me");
+                                   
                                    }
                                    });
                    object.position.y = 1.0;
@@ -166,7 +170,7 @@ function init() {
     var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/Toast upload.obj", function (object) {
                    object.traverse(function (child) {
-                                   if (child instanceof Physijs.BoxMesh) {
+                                   if (child instanceof Physijs.ConvexMesh) {
                                    child.material.map = texture;
                                    }
                                    });
