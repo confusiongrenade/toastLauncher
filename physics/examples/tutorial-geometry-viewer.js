@@ -33,6 +33,7 @@ function init() {
       // Create a camera, zoom it out from the model a bit, and add it to the scene.
       camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 1, 2000);
       camera.position.set(0,15,50);
+	  camera.lookAt(new THREE.Vector3(0, 7, 0));
       //camera.position.set(0,6,0);
       scene.add(camera);
 
@@ -223,7 +224,7 @@ function init() {
 
 	var launch = function (evt) {
 		console.log("launching");
-		toast.setLinearVelocity(0.05, 0.05, 0.0);
+		toast.setLinearVelocity(new THREE.Vector3(-5.0, 5.0, 0.0));
 	}
 
 	renderer.domElement.addEventListener('mousemove', launch);
