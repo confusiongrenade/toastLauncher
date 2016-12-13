@@ -20,7 +20,7 @@ function init() {
     scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
     scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
     
-    
+    var loader = new THREE.TextureLoader();
     
       var WIDTH = window.innerWidth,
           HEIGHT = window.innerHeight;
@@ -32,7 +32,7 @@ function init() {
 
       // Create a camera, zoom it out from the model a bit, and add it to the scene.
       camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 1, 2000);
-      camera.position.set(0,0,100);
+      camera.position.set(0,15,50);
       //camera.position.set(0,6,0);
       scene.add(camera);
 
@@ -156,7 +156,7 @@ function init() {
      tableMaterial.map.wrapS = tableMaterial.map.wrapT = THREE.RepeatWrapping;
      tableMaterial.map.repeat.set( 5, 5 );
     
-    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(30, 1, 30), tableMaterial, 100, { restitution: .2, friction: .8} );
+    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(30, 1, 30), tableMaterial, 0, { restitution: .2, friction: .8} );
     table.position.y = -.5;
     table.recieveShadow = true;
     scene.add(table);
@@ -164,9 +164,25 @@ function init() {
     
     
     
+	var toast_material = Physijs.createMaterial(
+			new THREE.MeshLambertMaterial({ map: loader.load("models/Toast upload.obj" )}),
+			.4,
+			.4
+		);
+		toast_material.map.wrapS = toast_material.map.wrapT = THREE.RepeatWrapping;
+		toast_material.map.repeat.set(1, .5);
+
+	var toast_geometry = new THREE.BoxGeometry(2.0, 2.0, 2.0);
+
+    var toast = new Physijs.BoxMesh(toast_geometry, toast_material);
+	
+	toast.position.y = 2.0;
+	toast.position.x = 10.0;
+	toast.scale.x = toast.scale.y = toast.scale.z = 1;
+	scene.add(toast);
 
     // Load in the mesh and add it to the scene.
-    var objLoader = new THREE.OBJLoader();
+  /*  var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/Toast upload.obj", function (object) {
                    object.traverse(function (child) {
                                    if (child instanceof Physijs.ConvexMesh) {
@@ -179,7 +195,7 @@ function init() {
                    object.scale.x = object.scale.y = object.scale.z = 1;
                    scene.add(object);
                    });
-    
+    */
     
     
     
@@ -203,7 +219,15 @@ function init() {
       });
 */
       // Add OrbitControls so that we can pan around with the mouse.
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      //controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+	var launch = function (evt) {
+		console.log("launching");
+		toast.setLinearVelocity(0.05, 0.05, 0.0);
+	}
+
+	renderer.domElement.addEventListener('mousemove', launch);
+
 
 }
 
@@ -217,6 +241,6 @@ function animate() {
         
     scene.simulate(); // run physics
       renderer.render(scene, camera);
-      controls.update();
+      //controls.update();
 
 }
