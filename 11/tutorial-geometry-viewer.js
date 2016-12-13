@@ -17,7 +17,7 @@ animate();
 function init() {
 
       // Create the scene and set the scene size.
-      scene = new Physijs.Scene();
+      scene = new Physijs.Scene({ fixedTimeStep: 1/120 });
     
     scene.setGravity( new THREE.Vector3 (0, -30, 0 ));
     
@@ -133,7 +133,7 @@ function init() {
                    scene.add(object);
                    });
     
-    ////  lets create a table
+    ////  let's create a table
     
     
      
@@ -150,7 +150,7 @@ function init() {
      tableMaterial.map.wrapS = tableMaterial.map.wrapT = THREE.RepeatWrapping;
      tableMaterial.map.repeat.set( 5, 5 );
     
-    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(30, 1, 30), tableMaterial, 0, { restitution: .2, friction: .8} );
+    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(30, 1, 30), tableMaterial, 100, { restitution: .2, friction: .8} );
     table.position.y = -.5;
     table.recieveShadow = true;
     scene.add(table);
@@ -195,11 +195,11 @@ function init() {
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-    }
+}
 
 
     // Renders the scene and updates the render as needed.
-    function animate() {
+function animate() {
 
       requestAnimationFrame(animate);
       
