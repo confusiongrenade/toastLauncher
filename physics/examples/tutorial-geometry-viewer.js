@@ -9,6 +9,10 @@ var scene, camera, renderer, controls;
 
 var table, loader, tableMaterial;
 
+var xLaunch, yLaunch, zLaunch;
+
+
+
 init();
 animate();
 
@@ -16,7 +20,20 @@ animate();
 function init() {
 
       // Create the scene and set the scene size.
+    
+    
+   /*
+    
+    document.getElementById("blueSlider").onchange =function(event) {
         
+        //var newColor = vec4 ( event.target.value, 0.0, 0.0, 1.0);
+        var blue = event.target.value;
+        console.Log(blue);
+        
+        
+     
+    }
+     */
     scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
     scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
     
@@ -115,49 +132,113 @@ function init() {
     */
     
     
-    var texture = new THREE.Texture();
     
-    var imageLoader = new THREE.ImageLoader();
-    imageLoader.load( "models/plato/plato.jpg", function (image) {
-                     texture.image = image;
-                     texture.needsUpdate = true;
-                     } );
+    
+    
+    
+   
+    
     
     // Load in the mesh and add it to the scene.
     var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/plato/plato-1.obj", function (object) {
+                   
+                   var toast_geometry = new THREE.CylinderGeometry(2.0, 2.0, 0.1);
+                   
+                   var mesh = new Physijs.CylinderMesh( toast_geometry, tableMaterial,  10,{ restitution: 0.2, friction: 0.8});
+                   
+                   
+                   
+                   object.add(mesh)
+                   
                    object.traverse(function (child) {
-                                   if (child instanceof Physijs.BoxMesh) {
+                                 //  Console.Log("help me");
+                                   if (child instanceof Physijs.CylinderMesh) {
                                    child.material.map = texture;
-                                   Console.Log("help me");
+                                   //Console.Log("help me");
+                                   
+                    
+                                   
+                                   
                                    
                                    }
                                    });
-                   object.position.y = 1.0;
+                   
+                   
+                   
+                   
+                   
+                   
+                   //object  = new Physijs.CylinderMesh(toast_geometry);
+                   
+                   //child.material.map = texture;
+                   /*
+                   mesh.position.y = 10.0;
+                   
+                   mesh.position.x = -10.0;
+                   
+                   mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
+                   
+                   
+                   */
+                  // var toast_geometry = new THREE.BoxGeometry(2.0, 2.0, 2.0);
+                   
+             
+                   
+                   object.position.y = 10.0;
                    
                    object.position.x = -10.0;
-                   object.scale.x = object.scale.y = object.scale.z = 1.3;
+                   object.scale.x = object.scale.y = object.scale.z = 2;
+              
+              
+              
                    scene.add(object);
                    });
     
+    
+    
+    
+    // Materials
+    tableMaterial = Physijs.createMaterial(
+                                           new THREE.MeshLambertMaterial({ map: loader.load( 'images/wood.jpg' )}),
+                                           .9, // high friction
+                                           .2 // low restitution
+                                           );
+    tableMaterial.map.wrapS = tableMaterial.map.wrapT = THREE.RepeatWrapping;
+    tableMaterial.map.repeat.set( 5, 5 );
+    
+    
+    
+    
+    var toast_geometry = new THREE.CylinderGeometry(2.0, 2.0, 0.1);
+    
+       var mesh = new Physijs.CylinderMesh( toast_geometry, tableMaterial,  10,{ restitution: 0.2, friction: 0.8});
+    
+    
+    
+    mesh.position.y = 10.0;
+    
+    mesh.position.x = -10.0;
+    mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
+    
+    
+
+    
+    scene.add(mesh)
+    
+    
+    
+    
+    
+    
+  
     ////  let's create a table
     
     
      
      
-     /// Loader
-     loader = new THREE.TextureLoader();
-     
-     // Materials
-     tableMaterial = Physijs.createMaterial(
-     new THREE.MeshLambertMaterial({ map: loader.load( 'images/wood.jpg' )}),
-     .9, // high friction
-     .2 // low restitution
-     );
-     tableMaterial.map.wrapS = tableMaterial.map.wrapT = THREE.RepeatWrapping;
-     tableMaterial.map.repeat.set( 5, 5 );
     
-    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(30, 1, 30), tableMaterial, 0, { restitution: .2, friction: .8} );
+    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(40, 1, 40), tableMaterial, 0, { restitution: .2, friction: .8} );
     table.position.y = -.5;
     table.recieveShadow = true;
     scene.add(table);
@@ -173,17 +254,17 @@ function init() {
 		toast_material.map.wrapS = toast_material.map.wrapT = THREE.RepeatWrapping;
 		toast_material.map.repeat.set(1, .5);
 
-	var toast_geometry = new THREE.BoxGeometry(2.0, 2.0, 2.0);
+	var toast_geometry = new THREE.BoxGeometry(6.0, 6.0, 0.6);
 
-    var toast = new Physijs.BoxMesh(toast_geometry, toast_material);
+    var toast = new Physijs.BoxMesh(toast_geometry, toast_material,  10,{ restitution: 0.2, friction: 0.8} );
 	
-	toast.position.y = 2.0;
+	toast.position.y = 9.0;
 	toast.position.x = 10.0;
 	toast.scale.x = toast.scale.y = toast.scale.z = 1;
 	scene.add(toast);
 
     // Load in the mesh and add it to the scene.
-  /*  var objLoader = new THREE.OBJLoader();
+    var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/Toast upload.obj", function (object) {
                    object.traverse(function (child) {
                                    if (child instanceof Physijs.ConvexMesh) {
@@ -196,7 +277,7 @@ function init() {
                    object.scale.x = object.scale.y = object.scale.z = 1;
                    scene.add(object);
                    });
-    */
+   
     
     
     
@@ -220,14 +301,25 @@ function init() {
       });
 */
       // Add OrbitControls so that we can pan around with the mouse.
-      //controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+    xLaunch = -6.0;
+    yLaunch = 30.0;
+    zLaunch = 0.0;
+    
+    
+    
 	var launch = function (evt) {
 		console.log("launching");
-		toast.setLinearVelocity(new THREE.Vector3(-5.0, 5.0, 0.0));
+		toast.setLinearVelocity(new THREE.Vector3(xLaunch, yLaunch, zLaunch));
+        toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
 	}
 
-	renderer.domElement.addEventListener('mousemove', launch);
+    
+    
+    
+    
+	renderer.domElement.addEventListener('mousedown', launch);
 
 
 }
@@ -235,7 +327,18 @@ function init() {
 
     // Renders the scene and updates the render as needed.
 function animate() {
-
+    
+    /*
+    document.getElementById("blueSlider").onchange =function(event) {
+        
+        //var newColor = vec4 ( event.target.value, 0.0, 0.0, 1.0);
+        var blue = event.target.value;
+        console.Log(blue);
+        
+        
+        
+    }
+*/
       requestAnimationFrame(animate);
       
       // Render the scene.
