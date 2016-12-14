@@ -301,7 +301,7 @@ function init() {
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-    xLaunch = -6.0;
+    xLaunch = -12.0;
     yLaunch = 30.0;
     zLaunch = 0.0;
     
@@ -336,8 +336,9 @@ function reset()
 {
 	toast.setLinearVelocity(new THREE.Vector3(0, 0, 0));
 	toast.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-	toast.position.x = 9.0;
-	toast.position.y = 10.0;
+	toast.position.y = 9.0;
+	toast.position.x = 20.0;
+	scene.add(toast);
 
 }
 
