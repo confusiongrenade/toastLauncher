@@ -53,7 +53,7 @@ function init() {
 
       // Create a camera, zoom it out from the model a bit, and add it to the scene.
       camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 1, 2000);
-      camera.position.set(0,15,50);
+      camera.position.set(0,15,75);
 	  camera.lookAt(new THREE.Vector3(0, 7, 0));
       //camera.position.set(0,6,0);
       scene.add(camera);
@@ -222,11 +222,8 @@ function init() {
     
     mesh.position.y = 10.0;
     
-    mesh.position.x = -10.0;
+    mesh.position.x = -20.0;
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
-    
-    
-
     
     scene.add(mesh)
     
@@ -237,12 +234,9 @@ function init() {
     
   
     ////  let's create a table
+
     
-    
-     
-     
-    
-    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(40, 1, 40), tableMaterial, 0, { restitution: .2, friction: .8} );
+    var table = new Physijs.BoxMesh(new THREE.BoxGeometry(60, 1, 60), tableMaterial, 0, { restitution: .2, friction: .8} );
     table.position.y = -.5;
     table.recieveShadow = true;
     scene.add(table);
@@ -263,12 +257,12 @@ function init() {
     toast = new Physijs.BoxMesh(toast_geometry, toast_material,  10,{ restitution: 0.2, friction: 0.8} );
 	
 	toast.position.y = 9.0;
-	toast.position.x = 10.0;
+	toast.position.x = 20.0;
 	toast.scale.x = toast.scale.y = toast.scale.z = 1;
 	scene.add(toast);
 
     // Load in the mesh and add it to the scene.
-    var objLoader = new THREE.OBJLoader();
+    /*var objLoader = new THREE.OBJLoader();
     objLoader.load( "models/Toast upload.obj", function (object) {
                    object.traverse(function (child) {
                                    if (child instanceof Physijs.ConvexMesh) {
@@ -280,7 +274,7 @@ function init() {
                     object.position.x = 10.0;
                    object.scale.x = object.scale.y = object.scale.z = 1;
                    scene.add(object);
-                   });
+                   });*/
    
     
     
@@ -338,6 +332,15 @@ function launch()
         toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
 }
 
+function reset()
+{
+	toast.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+	toast.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+	toast.position.x = 9.0;
+	toast.position.y = 10.0;
+
+}
+
 
     // Renders the scene and updates the render as needed.
 function animate() {
@@ -357,6 +360,10 @@ function animate() {
 	  {
 		launch();
 	  }	
+	  if(keyboard.pressed("R"))
+	  {
+		reset();
+	  }
 		
       requestAnimationFrame(animate);
       
