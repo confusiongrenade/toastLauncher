@@ -13,7 +13,7 @@ var xLaunch, yLaunch, zLaunch;
 
 var keyboard = new THREEx.KeyboardState();
 
-var toast;
+var toast, plate;
 
 var gui = new dat.gui.GUI();
 
@@ -41,21 +41,7 @@ animate();
 function init() {
 
       // Create the scene and set the scene size.
-    
-    
-   /*
-    
-    document.getElementById("blueSlider").onchange =function(event) {
-        
-        //var newColor = vec4 ( event.target.value, 0.0, 0.0, 1.0);
-        var blue = event.target.value;
-        console.Log(blue);
-        
-        
-     
-    }
-     */
-    
+
     
    
     scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
@@ -106,62 +92,7 @@ function init() {
       var directionalLight3 = new THREE.DirectionalLight( 0xffeedd );
       directionalLight3.position.set( 0, 0, -1 );
       scene.add( directionalLight3 );
-    
-    
-    /*
-    
-    var texture = new THREE.Texture();
-    
-    var imageLoader = new THREE.ImageLoader();
-    imageLoader.load( "models/kia.jpg", function (image) {
-                     texture.image = image;
-                     texture.needsUpdate = true;
-                     } );
-    
-    // Load in the mesh and add it to the scene.
-    var objLoader = new THREE.OBJLoader();
-    objLoader.load( "models/kia.obj", function (object) {
-                   object.traverse(function (child) {
-                                   if (child instanceof THREE.Mesh) {
-                                   child.material.map = texture;
-                                   }
-                                   });
-                   scene.add(object);
-                   });
-///*
-     
-     */
-      // texture
-    
-    /*
-    
-      var texture = new THREE.Texture();
-
-      var imageLoader = new THREE.ImageLoader();
-      imageLoader.load( "models/plato/plato.jpg", function (image) {
-        texture.image = image;
-        texture.needsUpdate = true;
-      } );
-
-      // Load in the mesh and add it to the scene.
-      var objLoader = new THREE.OBJLoader();
-      objLoader.load( "models/plato/plato-1.obj", function (object) {
-        object.traverse(function (child) {
-          if (child instanceof Physijs.BoxMesh) {
-            child.material.map = texture;
-          }
-        });
-        scene.add(object);
-      });
-    */
-    
-    
-    
-    
-    
-    
-   
-    
+       
     
     // Load in the mesh and add it to the scene.
     var objLoader = new THREE.OBJLoader();
@@ -187,26 +118,7 @@ function init() {
                                    
                                    }
                                    });
-                   
-                   
-                   
-                   
-                   
-                   
-                   //object  = new Physijs.CylinderMesh(toast_geometry);
-                   
-                   //child.material.map = texture;
-                   /*
-                   mesh.position.y = 10.0;
-                   
-                   mesh.position.x = -10.0;
-                   
-                   mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
-                   
-                   
-                   */
-                  // var toast_geometry = new THREE.BoxGeometry(2.0, 2.0, 2.0);
-                   
+
              
                    
                    object.position.y = 10.0;
@@ -236,16 +148,16 @@ function init() {
     
     var toast_geometry = new THREE.CylinderGeometry(2.0, 2.0, 0.1);
     
-       var mesh = new Physijs.CylinderMesh( toast_geometry, tableMaterial,  10,{ restitution: 0.2, friction: 0.8});
+       plate = new Physijs.CylinderMesh( toast_geometry, tableMaterial,  10,{ restitution: 0.2, friction: 0.8});
     
     
     
-    mesh.position.y = 10.0;
+    plate.position.y = 10.0;
     
-    mesh.position.x = -20.0;
-    mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
+    plate.position.x = -20.0;
+    plate.scale.x = plate.scale.y = plate.scale.z = 2;
     
-    scene.add(mesh)
+    scene.add(plate)
     
     
     
@@ -278,46 +190,11 @@ function init() {
 	
 	toast.position.y = 9.0;
 	toast.position.x = 20.0;
+
 	toast.scale.x = toast.scale.y = toast.scale.z = 1;
 	scene.add(toast);
 
-    // Load in the mesh and add it to the scene.
-    /*var objLoader = new THREE.OBJLoader();
-    objLoader.load( "models/Toast upload.obj", function (object) {
-                   object.traverse(function (child) {
-                                   if (child instanceof Physijs.ConvexMesh) {
-                                   child.material.map = texture;
-                                   }
-                                   });
-                   
-                   object.position.y = 2.0;
-                    object.position.x = 10.0;
-                   object.scale.x = object.scale.y = object.scale.z = 1;
-                   scene.add(object);
-                   });*/
-   
-    
-    
-    
-//*/
-    
-/*
-      // BEGIN Clara.io JSON loader code
-      var objLoader = new THREE.ObjectLoader();
-      objLoader.load("models/teapot-claraio.json", function ( object ) {
-            scene.add( object );
-          } );
-      // END Clara.io JSON loader code
-*/
-    
-/*
-      var jsonLoader = new THREE.JSONLoader();
-      jsonLoader.load( "models/logo.js", function(geometry){
-      var material = new THREE.MeshLambertMaterial({color: 0x55B663});
-        var mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-      });
-*/
+
       // Add OrbitControls so that we can pan around with the mouse.
       controls = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -325,23 +202,7 @@ function init() {
     yLaunch = 30.0;
     zLaunch = 0.0;
     
-    
-    
-	/*var launch = function (evt) {
-		console.log("launching");
-		toast.setLinearVelocity(new THREE.Vector3(xLaunch, yLaunch, zLaunch));
-        toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
-	}
 
-    
-    
-    
-    
-	renderer.domElement.addEventListener('keydown', function (event) {
-		keyCode = event.keyCode;
-
-		console.log(keyCode);
-	});*/
 
 
 }
@@ -358,6 +219,7 @@ function reset()
 	toast.setAngularVelocity(new THREE.Vector3(0, 0, 0));
 	toast.position.y = 9.0;
 	toast.position.x = 20.0;
+	toast.position.z = 0.0;
 	scene.add(toast);
 
 }
@@ -366,17 +228,7 @@ function reset()
     // Renders the scene and updates the render as needed.
 function animate() {
     
-    /*
-    document.getElementById("blueSlider").onchange =function(event) {
-        
-        //var newColor = vec4 ( event.target.value, 0.0, 0.0, 1.0);
-        var blue = event.target.value;
-        console.Log(blue);
-        
-        
-        
-    }
-*/
+
 	  if(keyboard.pressed("L"))
 	  {
 		launch();
