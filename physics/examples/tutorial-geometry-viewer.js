@@ -15,6 +15,23 @@ var keyboard = new THREEx.KeyboardState();
 
 var toast;
 
+var gui = new dat.gui.GUI();
+
+
+var obj = {
+
+x: 9,
+y: 9,
+z: 7,
+
+};
+
+
+
+gui.remember(obj);
+gui.add(obj, 'x');
+gui.add(obj, 'y');
+gui.add(obj, 'z');
 
 
 init();
@@ -38,6 +55,9 @@ function init() {
      
     }
      */
+    
+    
+   
     scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
     scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
     
@@ -334,7 +354,7 @@ function init() {
 
 function launch()
 {
-		toast.setLinearVelocity(new THREE.Vector3(xLaunch, yLaunch, zLaunch));
+		toast.setLinearVelocity(new THREE.Vector3(obj.x, obj.y, obj.z));
         toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
 }
 
