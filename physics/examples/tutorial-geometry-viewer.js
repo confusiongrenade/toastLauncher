@@ -11,6 +11,10 @@ var table, loader, tableMaterial;
 
 var xLaunch, yLaunch, zLaunch;
 
+var keyboard = new THREEx.KeyboardState();
+
+var toast;
+
 
 
 init();
@@ -247,7 +251,7 @@ function init() {
     
     
 	var toast_material = Physijs.createMaterial(
-			new THREE.MeshLambertMaterial({ map: loader.load("models/Toast upload.obj" )}),
+			new THREE.MeshLambertMaterial({ map: loader.load("models/toast.png" )}),
 			.4,
 			.4
 		);
@@ -256,7 +260,7 @@ function init() {
 
 	var toast_geometry = new THREE.BoxGeometry(6.0, 6.0, 0.6);
 
-    var toast = new Physijs.BoxMesh(toast_geometry, toast_material,  10,{ restitution: 0.2, friction: 0.8} );
+    toast = new Physijs.BoxMesh(toast_geometry, toast_material,  10,{ restitution: 0.2, friction: 0.8} );
 	
 	toast.position.y = 9.0;
 	toast.position.x = 10.0;
@@ -309,7 +313,7 @@ function init() {
     
     
     
-	var launch = function (evt) {
+	/*var launch = function (evt) {
 		console.log("launching");
 		toast.setLinearVelocity(new THREE.Vector3(xLaunch, yLaunch, zLaunch));
         toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
@@ -319,9 +323,19 @@ function init() {
     
     
     
-	renderer.domElement.addEventListener('mousedown', launch);
+	renderer.domElement.addEventListener('keydown', function (event) {
+		keyCode = event.keyCode;
+
+		console.log(keyCode);
+	});*/
 
 
+}
+
+function launch()
+{
+		toast.setLinearVelocity(new THREE.Vector3(xLaunch, yLaunch, zLaunch));
+        toast.setAngularVelocity(new THREE.Vector3(1.0, 0.75, 0.0));
 }
 
 
@@ -339,6 +353,11 @@ function animate() {
         
     }
 */
+	  if(keyboard.pressed("L"))
+	  {
+		launch();
+	  }	
+		
       requestAnimationFrame(animate);
       
       // Render the scene.
