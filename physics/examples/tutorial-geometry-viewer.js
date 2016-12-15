@@ -20,9 +20,9 @@ var gui = new dat.gui.GUI();
 
 var obj = {
 
-x: 9,
-y: 9,
-z: 7,
+x: -9,
+y: 40,
+z: 0,
 
 };
 
@@ -245,6 +245,18 @@ function init() {
     mesh.position.x = -20.0;
     mesh.scale.x = mesh.scale.y = mesh.scale.z = 2;
     
+    
+    toast_geometry = new THREE.CylinderGeometry(1.0, 1.0, 0.3);
+   
+    var meshBottom =  new Physijs.CylinderMesh( toast_geometry, tableMaterial,  10,{ restitution: 0.2, friction: 0.8});
+    
+    meshBottom.position.y = -0.2;
+    
+    meshBottom.position.x = 0.0;
+    
+   //  meshBottom.scale.x = meshBottom.scale.y = meshBottom.scale.z = 1.5;
+    
+    mesh.add(meshBottom);
     scene.add(mesh)
     
     
