@@ -23,12 +23,16 @@ var obj = {
 x: -9,
 y: 40,
 z: 0,
+Launch: "Press L to launch",
+Reset: "Press R to reset",
 
 };
 
 
 
 gui.remember(obj);
+gui.add(obj, 'Launch');
+gui.add(obj, 'Reset');
 gui.add(obj, 'x');
 gui.add(obj, 'y');
 gui.add(obj, 'z');
